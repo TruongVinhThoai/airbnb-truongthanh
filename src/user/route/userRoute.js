@@ -17,6 +17,7 @@ import Account from "../page/Account/Account";
 import PageNotFound from "../page/404/PageNotFound";
 import DefaultLayout from "../layout/DefaultLayout";
 import AccountLayout from "../layout/AccountLayout";
+import RoomDetail from "../page/Detail";
 
 export const userRoute = {
     home: {
@@ -31,7 +32,7 @@ export const userRoute = {
 
     detail: {
         path: "/room/:id",
-        element: <DefaultLayout><Room /></DefaultLayout>,
+        element: <DefaultLayout><RoomDetail /></DefaultLayout>,
         id: (id) => `/room/${id}`
     },
 
