@@ -1,3 +1,4 @@
 export const popupName = {
-  calendar: "calendar"
-}
+  calendar: "calendar",
+  login: "login",
+};

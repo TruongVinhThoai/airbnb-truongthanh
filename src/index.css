@@ -11,3 +11,18 @@
     overflow: auto;
   }
 }
+.ant-form-item {
+  margin-bottom: 0 !important;
+}
+
+.ant-btn {
+  height: 100% !important;
+}
+.ant-btn:hover {
+  height: 100% !important;
+}
+
+.ant-btn:hover {
+  border: 1px solid transparent !important;
+  color: white !important;
+}
