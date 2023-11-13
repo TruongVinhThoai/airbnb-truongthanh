@@ -1,11 +1,4 @@
-import React from "react";
+import FormLogin from "./Form";
 import "./asset/style.scss";
-import Form from "./Form";
 
-export default function Login() {
-  return (
-    <div>
-      <Form />
-    </div>
-  );
-}
+export default FormLogin;

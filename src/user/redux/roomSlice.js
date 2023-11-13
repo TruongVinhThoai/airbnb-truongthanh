@@ -1,12 +1,12 @@
 // roomSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getDetaiRoomData } from "user/api/api";
+import { roomServ } from "../api/api";
 
 export const fetchRoomDetail = createAsyncThunk(
   "room/fetchRoomDetail",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await getDetaiRoomData({ id });
+      const response = await roomServ.getDetaiRoomData({ id });
       return response.data.content;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -39,7 +39,7 @@ export const roomSlice = createSlice({
       .addCase(fetchRoomDetail.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
+      });
   },
 });
 

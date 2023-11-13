@@ -1,20 +1,39 @@
 import React, { useState } from "react";
-import { Button, Form, Input } from "antd";
-import { UnlockOutlined, UserOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Button, DatePicker, Form, Input, Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/userSlice";
+import { Link } from "react-router-dom";
+import { validatePhoneNumber } from "./asset/utils";
+import { registerUser } from "../../redux/userSlice";
+import dayjs from "dayjs";
+import {
+  MailOutlined,
+  PhoneOutlined,
+  UnlockOutlined,
+  EnvironmentOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
-const FormLogin = () => {
+const FormRegister = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.userSlice);
   const [isFormDirty, setIsFormDirty] = useState(false);
 
+  const dateFormat = "DD/MM/YYYY";
+
   const onFinish = (values) => {
-    const { email, password } = values || {};
-    const data = { email, password };
-    dispatch(loginUser(data));
-    console.log(values);
+    const { birthday, name, email, phone, gender, password, address } = values;
+    const formattedBirthday = dayjs(birthday).format(dateFormat);
+    dispatch(
+      registerUser({
+        birthday: formattedBirthday,
+        name,
+        email,
+        phone,
+        gender,
+        password,
+        address,
+      })
+    );
   };
 
   const handleValuesChange = () => {
@@ -25,19 +44,25 @@ const FormLogin = () => {
 
   return (
     <Form
-      className="w-full form-login"
+      className="w-full form-register"
       layout="vertical"
-      name="login"
+      name="register"
       initialValues={{
-        remember: true,
+        birthday: dayjs("01/01/2001", dateFormat),
+        name: "",
+        email: "",
+        phone: "",
+        gender: "Gender",
+        password: "",
+        address: "",
       }}
       onFinish={onFinish}
       autoComplete="off"
       onValuesChange={handleValuesChange}
     >
-      <div className="relative mb-4">
-        <a className="lg:absolute top-0 left-0" href="/">
-          <h2 className="text-center mb-2">
+      <div className="mb-4 relative">
+        <div className="mb-2 md:absolute top-0 left-0">
+          <a className href="/">
             <svg
               width={102}
               height={32}
@@ -53,14 +78,30 @@ const FormLogin = () => {
                 fill="currentcolor"
               />
             </svg>
-          </h2>
-        </a>
-        <div className="hidden lg:block font-semibold text-3xl text-blue-800 text-center">
-          Login
+          </a>
+        </div>
+        <div className="hidden md:block text-center font-semibold text-3xl text-blue-800">
+          <h1>Đăng ký tài khoản</h1>
         </div>
       </div>
-      <div>
-        <div className="mb-2">
+      <div className="md:grid md:grid-cols-2 gap-x-4 gap-y-1">
+        <div className="mb-1">
+          <Form.Item
+            label="Username"
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "Please input your username!",
+              },
+            ]}
+            hasFeedback
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            <Input prefix={<UserOutlined />} placeholder="Username..." />
+          </Form.Item>
+        </div>
+        <div className="mb-1">
           <Form.Item
             label="Email"
             name="email"
@@ -71,11 +112,29 @@ const FormLogin = () => {
               },
             ]}
             hasFeedback
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
-            <Input prefix={<UserOutlined />} placeholder="Email..." />
+            <Input prefix={<MailOutlined />} placeholder="Email..." />
           </Form.Item>
         </div>
-        <div className="mb-6">
+        <div className="mb-1">
+          <Form.Item
+            label="Phone number"
+            name="phone"
+            rules={[
+              {
+                required: true,
+                validator: validatePhoneNumber,
+                message: "Please input your phone number!",
+              },
+            ]}
+            hasFeedback
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            <Input prefix={<PhoneOutlined />} placeholder="Phone..." />
+          </Form.Item>
+        </div>
+        <div className="mb-1">
           <Form.Item
             label="Password"
             name="password"
@@ -86,6 +145,7 @@ const FormLogin = () => {
               },
             ]}
             hasFeedback
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
             <Input.Password
               prefix={<UnlockOutlined />}
@@ -93,39 +153,85 @@ const FormLogin = () => {
             />
           </Form.Item>
         </div>
-        <div className="grid grid-cols-2 items-center mb-6">
-          <a
-            aria-current="page"
-            className="text-rose-700 hover:text-rose-500 hover:underline underline-offset-4 tracking-wider duration-200 active"
-            href="/login"
+        <div className="mb-1">
+          <Form.Item
+            label="Address"
+            name="address"
+            rules={[
+              {
+                required: true,
+                message: "Please input your code!",
+              },
+            ]}
+            hasFeedback
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
-            Quên mật khẩu?
-          </a>
+            <Input prefix={<EnvironmentOutlined />} placeholder="Address..." />
+          </Form.Item>
+        </div>
+        <div className="mb-1">
+          <Form.Item
+            label="Birthday"
+            name="birthday"
+            hasFeedback
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            <DatePicker
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-[0.3rem] dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              format={dateFormat}
+            />
+          </Form.Item>
+        </div>
+        <div className="mb-1">
+          <Form.Item
+            label="Gender"
+            name="gender"
+            rules={[
+              {
+                required: true,
+                message: "Please input your code!",
+              },
+            ]}
+            hasFeedback
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >
+            <Select
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              options={[
+                {
+                  value: true,
+                  label: "Nam",
+                },
+                {
+                  value: false,
+                  label: "Nữ",
+                },
+              ]}
+            />
+          </Form.Item>
+        </div>
+        <div />
+        <div className="col-span-2 text-center">
           <Form.Item>
             <Button
-              className="p-2 text-white focus:outline-none focus:ring-4 font-medium rounded-lg disabled:pointer-events-none text-sm text-center mr-2 w-full bg-red-500 hover:bg-red-800 duration-300"
+              className="text-white focus:outline-none focus:ring-4  font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 bg-red-500 disabled:pointer-events-none hover:bg-red-800 duration-300 w-1/2"
               htmlType="submit"
               disabled={!isFormDirty || loading}
               loading={loading}
             >
-              Đăng nhập
+              Đăng ký
             </Button>
           </Form.Item>
         </div>
-        <div className="text-center">
-          <p className="pb-3">
-            Don't have an account?
-            <Link
-              className="text-rose-700 hover:text-rose-500 hover:underline underline-offset-4 tracking-wider duration-200 active pl-1"
-              to="/register"
-            >
-              Sign up
-            </Link>
-          </p>
-        </div>
+        <Link
+          className="col-span-2 text-center text-rose-600 hover:text-rose-500 hover:underline underline-offset-4 tracking-wider duration-200 underline"
+          to="/login"
+        >
+          Sign in
+        </Link>
       </div>
     </Form>
   );
 };
 
-export default React.memo(FormLogin);
+export default React.memo(FormRegister);

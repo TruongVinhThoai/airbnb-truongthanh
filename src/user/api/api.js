@@ -1,23 +1,30 @@
-import { dateFromIsoString } from "user/utils/libs";
+import { dateFromIsoString } from "../page/Room/asset/utils";
 import { https } from "./config";
 
 export const userServ = {
   login: (info) => https.post(`/auth/signin`, info),
 };
-export const getRoomsData = () => https.get("/phong-thue");
-export const getDetaiRoomData = ({ id }) => https.get(`/phong-thue/${id}`);
-export const postBookingRoom = async ({
-  maPhong,
-  ngayDen,
-  ngayDi,
-  soLuongKhach,
-  maNguoiDung,
-}) => {
-  return https.post("dat-phong", {
+
+export const roomServ = {
+  get: () => https.get("/phong-thue"),
+  getDetaiRoomData: ({ id }) => https.get(`/phong-thue/${id}`),
+  postBookingRoom: async ({
     maPhong,
-    ngayDen: dateFromIsoString(ngayDen),
-    ngayDi: dateFromIsoString(ngayDi),
+    ngayDen,
+    ngayDi,
     soLuongKhach,
     maNguoiDung,
-  });
+  }) => {
+    return https.post("dat-phong", {
+      maPhong,
+      ngayDen: dateFromIsoString(ngayDen),
+      ngayDi: dateFromIsoString(ngayDi),
+      soLuongKhach,
+      maNguoiDung,
+    });
+  },
+};
+
+export const viTriServ = {
+  get: () => https.get("/vi-tri"),
 };

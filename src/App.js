@@ -3,6 +3,7 @@ import _ from "lodash";
 import { userRoute } from "./user/route/userRoute";
 import { adminRoute } from "./admin/route/adminRoute";
 import Popup from "./user/component/Popup";
+import ModalBg from "./user/component/Modal/ModalBg";
 
 function App() {
   const createRoutes = (routeList) =>
@@ -11,13 +12,16 @@ function App() {
     ));
 
   return (
-    <BrowserRouter>
-      <Routes>
-        {createRoutes(userRoute)}
-        {createRoutes(adminRoute)}
-      </Routes>
-      <Popup />
-    </BrowserRouter>
+    <>
+      <ModalBg />
+      <BrowserRouter>
+        <Routes>
+          {createRoutes(userRoute)}
+          {createRoutes(adminRoute)}
+        </Routes>
+        <Popup />
+      </BrowserRouter>
+    </>
   );
 }
 

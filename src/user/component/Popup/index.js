@@ -1,16 +1,21 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { popupName } from "../../utils/constants";
+import { POPUP_NAME } from "../../constants/popup/index";
+import Login from "./Login";
+import Register from "./Register";
+import Profile from "./Profile";
 
 const Popup = () => {
-  const popupData = useSelector((state) => state.popupSlice);
-
-  const { popup } = popupData || {};
+  const popup = useSelector((state) => state?.popupSlice?.popup);
   if (!popup) return null;
 
   switch (popup) {
-    case popup === popupName.login:
-      return;
+    case POPUP_NAME.LOGIN:
+      return <Login />;
+    case POPUP_NAME.REGISTER:
+      return <Register />;
+    case POPUP_NAME.PROFILE:
+      return <Profile />;
     default:
       return null;
   }

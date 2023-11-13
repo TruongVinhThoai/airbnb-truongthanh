@@ -1,19 +1,37 @@
-import React, { Suspense } from 'react'
+import React, { useEffect } from 'react'
 import Header from '../component/Header/Header'
 import Footer from '../component/Footer/Footer'
 
 export default function DefaultLayout({ children }) {
+    useEffect(() => {
+        const height = 90
+        const handleScroll = () => {
+            if (document.body.scrollTop > height || document.documentElement.scrollTop > height) {
+                console.log("show");
+            } else {
+                console.log("hide");
+            }
+        }
+
+        window.addEventListener("scroll", handleScroll)
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll)
+        }
+
+    }, [])
+
     return (
-        <Suspense fallback={<>Loading...</>}>
-            <header className='px-20 border-b-[1px] border-gray-200'>
+        <>
+            <header className='px-20 border-b-[1px] border-gray-200 fixed w-full bg-white z-20'>
                 <Header searchBar />
             </header>
-            <main>
+            <div className="px-20 pt-24">
                 {children}
-            </main>
+            </div>
             <footer className='px-20 bg-[#F7F7F7]'>
                 <Footer />
             </footer>
-        </Suspense>
+        </>
     )
 }

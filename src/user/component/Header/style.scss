@@ -2,7 +2,7 @@
     button {
         transition: all 0.2s;
         &:hover {
-            background: #f7f7f7;
+            background: #e1e1e1;
             padding: 3px 12px;
             border-radius: 22px;
         }
@@ -18,5 +18,82 @@
 
     &:hover {
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+}
+
+.sb-location {
+    &:hover {
+        background: #d2d2d2 !important;
+    }
+    .ant-select-clear {
+        background: transparent;
+    }
+    .ant-select-selector {
+        padding: 0 !important;
+    }
+    .ant-select-single .ant-select-selector .ant-select-selection-search {
+        inset-inline-start: 0;
+        inset-inline-end: 30px;
+    }
+    &.active {
+        background: #fbfbfb !important;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+}
+
+.sb-date-container {
+    .ant-picker {
+        visibility: hidden !important;
+    }
+}
+
+.sb-date {
+    cursor: pointer !important;
+    &:hover {
+        background: #d2d2d2 !important;
+    }
+    input {
+        cursor: pointer;
+        background: transparent;
+    }
+    &.active {
+        background: #fbfbfb !important;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+}
+
+.sb-people {
+    &:hover {
+        background: #d2d2d2 !important;
+    }
+    input {
+        cursor: pointer;
+        background: transparent;
+        padding: 0 !important;
+        border: none;
+    }
+    .sb-people-input {
+        box-shadow: none !important;
+    }
+    &.active {
+        background: #fbfbfb !important;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+    .sb-people-popup {
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        transform: translateY(calc(100% + 15px));
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04),
+            0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .people-option-icon {
+        padding: 10px;
+        transition: all 0.1s;
+        border-radius: 50%;
+        &:hover {
+            background: #e1e1e1;
+        }
     }
 }

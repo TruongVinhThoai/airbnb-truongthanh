@@ -1,10 +1,3 @@
-/**
- * Chứa các hàm js:
- * - Không được thư viện hỗ trợ
- * - Không phải custom hook
- * - Tái sử dụng ở nhiều component
- */
-
 export function slugify(title) {
     //Đổi chữ hoa thành chữ thường
     let slug = title.toLowerCase();

@@ -4,8 +4,8 @@ import React, { useMemo, useState } from "react";
 import "react-date-range/dist/styles.css";
 import { StarFilled } from "@ant-design/icons";
 import Calendar from "../Calendar";
-import { formattedDate } from "user/utils/libs";
-import { postBookingRoom } from "user/api/api";
+import { formattedDate } from "../asset/utils";
+import { roomServ } from "../../../api/api";
 import styles from "./Detail.module.scss";
 
 const Booking = ({ data }) => {
@@ -49,13 +49,14 @@ const Booking = ({ data }) => {
   const handleBooking = async (e) => {
     e.preventDefault();
     if (userLogged && guest) {
-      await postBookingRoom({
-        maPhong: id,
-        ngayDen: dates?.[0]?.startDate,
-        ngayDi: dates?.[0]?.endDate,
-        soLuongKhach: guest,
-        maNguoiDung: userId,
-      })
+      await roomServ
+        .postBookingRoom({
+          maPhong: id,
+          ngayDen: dates?.[0]?.startDate,
+          ngayDi: dates?.[0]?.endDate,
+          soLuongKhach: guest,
+          maNguoiDung: userId,
+        })
         .then((res) => {
           if (res.status === 201) {
             notification.success({
