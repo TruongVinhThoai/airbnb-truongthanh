@@ -21,7 +21,7 @@ const UpdateForm = () => {
       name,
       email,
       phone,
-      gender: gender === "Nam" ? true : false,
+      gender,
       id: id,
       role,
     };
