@@ -1,12 +1,12 @@
-import { Button, Form, Input, Rate } from "antd";
-import React, { useState } from "react";
+import { Button, Form, Input, Rate, notification } from "antd";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postComment } from "../../../../redux/commentSlice";
+import { editComment, postComment } from "../../../../redux/commentSlice";
 import { getCurrentDate } from "./utils";
 
 const desc = ["terrible", "bad", "normal", "good", "wonderful"];
 
-const CommentForm = ({ editing, id }) => {
+const CommentForm = ({ editing, id, commentId, setEditing }) => {
   const [rating, setRating] = useState(4);
   const { user } = useSelector((state) => state?.userSlice?.user || {});
   const dispatch = useDispatch();
@@ -16,15 +16,22 @@ const CommentForm = ({ editing, id }) => {
   const handlePostComment = (values) => {
     const { comment } = values || {};
     const data = {
-      id: Number(id),
-      maPhong: Number(id),
+      id: commentId || id,
+      maPhong: id,
       maNguoiBinhLuan: user?.id,
       ngayBinhLuan: currentDate,
       noiDung: comment,
       saoBinhLuan: rating,
     };
     if (editing) {
-      // dispatch(updateComment({ id: commentData.id, text: values.comment }));
+      setEditing("");
+      if (commentId) {
+        dispatch(editComment({ id: commentId, commentData: data }));
+      } else {
+        notification.success({
+          message: "An error occurred. Please try later!.",
+        });
+      }
     } else {
       dispatch(postComment({ commentData: data }));
     }
@@ -33,6 +40,10 @@ const CommentForm = ({ editing, id }) => {
     form.resetFields();
   };
   console.log(editing);
+
+  useEffect(() => {
+    form.setFieldsValue({ comment: editing });
+  }, [editing, form]);
 
   return (
     <>
@@ -44,7 +55,7 @@ const CommentForm = ({ editing, id }) => {
       />
       <Form
         autoFocus={editing}
-        initialValues={{ comment: editing }}
+        defaultValue={{ comment: editing }}
         form={form}
         onFinish={handlePostComment}
         className="mb-3"

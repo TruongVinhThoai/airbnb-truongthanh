@@ -9,10 +9,11 @@ import { removeComment } from "../../../../redux/commentSlice";
 
 const Comments = ({ id }) => {
   const { comments } = useSelector((state) => state?.commentSlice);
-  const [visibleItems, setVisibleItems] = useState(100);
+  const [visibleItems, setVisibleItems] = useState(10);
   const dispatch = useDispatch();
 
-  const [editing, setEditing] = useState('');
+  const [editing, setEditing] = useState("");
+  const [commentId, setCommentId] = useState(null);
   const { user } = useSelector((state) => state?.userSlice?.user) || {};
   const commentRef = useRef(null);
 
@@ -37,7 +38,7 @@ const Comments = ({ id }) => {
 
   const handleEdit = (id, noiDung) => {
     setEditing(noiDung);
-    console.log(noiDung)
+    setCommentId(id);
     if (commentRef.current) {
       commentRef.current.scrollIntoView({
         behavior: "smooth",
@@ -54,9 +55,17 @@ const Comments = ({ id }) => {
     <section className="py-8 lg:py-16 antialiased" ref={commentRef}>
       <div className="max-w-2xl mx-auto px-4">
         <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg lg:text-2xl font-bold">Discussion (20)</h2>
+          <h2 className="text-lg lg:text-2xl font-bold">
+            Discussion{" "}
+            {sortedComments?.length ? `(${sortedComments?.length})` : ""}
+          </h2>
         </div>
-        <Form commentDefaultValue={""} editing={editing} id={id} />
+        <Form
+          editing={editing}
+          id={id}
+          commentId={commentId}
+          setEditing={setEditing}
+        />
         {sortedComments?.length ? (
           <>
             {sortedComments?.slice(0, visibleItems).map((comment) => (

@@ -14,7 +14,9 @@ export const postComment = createAsyncThunk(
       const response = await https.post(`/binh-luan`, commentData);
       if (response.status === 201) {
         const newComment = response.data.content;
-        notification.success({ message: "Comment posted successfully" });
+        notification.success({
+          message: response?.data.message || "Comment posted successfully",
+        });
         return newComment;
       }
     } catch (error) {
@@ -33,9 +35,12 @@ export const editComment = createAsyncThunk(
   async ({ id, commentData }) => {
     try {
       const response = await https.put(`/binh-luan/${id}`, commentData);
+      console.log(response);
       if (response.status === 200) {
         const editedComment = response.data.content;
-        notification.success({ message: "Comment edited successfully" });
+        notification.success({
+          message: response?.data.message || "Comment edited successfully",
+        });
         return editedComment;
       }
     } catch (error) {
@@ -55,7 +60,9 @@ export const removeComment = createAsyncThunk(
     try {
       const response = await https.delete(`/binh-luan/${id}`);
       if (response.status === 200) {
-        notification.success({ message: "Comment removed successfully" });
+        notification.success({
+          message: response?.data.message || "Comment removed successfully",
+        });
         return id;
       }
     } catch (error) {
@@ -104,9 +111,9 @@ const commentsSlice = createSlice({
       })
       .addCase(postComment.fulfilled, (state, action) => {
         state.loading = false;
-        
+
         console.log("Action Payload:", action.payload);
-      
+
         // Check if action.payload is not undefined before updating state
         if (action.payload) {
           state.comments = [...state.comments, action.payload];
@@ -114,7 +121,7 @@ const commentsSlice = createSlice({
           console.error("postComment.fulfilled action payload is undefined");
         }
       })
-      
+
       .addCase(postComment.rejected, (state) => {
         state.loading = false;
       })
