@@ -53,7 +53,7 @@ const Comments = ({ id }) => {
 
   return (
     <section className="py-8 lg:py-16 antialiased" ref={commentRef}>
-      <div className="max-w-2xl mx-auto px-4">
+      <div className="px-4">
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-lg lg:text-2xl font-bold">
             Discussion{" "}

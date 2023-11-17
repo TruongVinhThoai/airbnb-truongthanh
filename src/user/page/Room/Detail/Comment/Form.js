@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editComment, postComment } from "../../../../redux/commentSlice";
 import { getCurrentDate } from "./utils";
+import { setPopup } from "../../../../redux/popupSlice";
+import { POPUP_NAME } from "../../../../constants/popup";
 
 const desc = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -23,6 +25,7 @@ const CommentForm = ({ editing, id, commentId, setEditing }) => {
       noiDung: comment,
       saoBinhLuan: rating,
     };
+    if(user?.id) {
     if (editing) {
       setEditing("");
       if (commentId) {
@@ -37,9 +40,10 @@ const CommentForm = ({ editing, id, commentId, setEditing }) => {
     }
 
     // Clear the form after submission
-    form.resetFields();
+    form.resetFields();} else {
+      dispatch(setPopup({popup: POPUP_NAME.LOGIN}));
+    }
   };
-  console.log(editing);
 
   useEffect(() => {
     form.setFieldsValue({ comment: editing });
