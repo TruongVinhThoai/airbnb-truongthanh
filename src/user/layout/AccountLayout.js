@@ -8,7 +8,7 @@ export default function DefaultLayout({ children }) {
             <header className='px-20 border-b-[1px] border-gray-200'>
                 <Header />
             </header>
-            <div className="px-20">
+            <div className="px-4 md:px-8">
                 {children}
             </div>
             <footer className='px-20 bg-[#F7F7F7]'>

@@ -28,3 +28,7 @@ export const roomServ = {
 export const viTriServ = {
   get: () => https.get("/vi-tri"),
 };
+
+export const updateProfile = {
+  put: async (id) => https.put(`/users/${id}`),
+};
