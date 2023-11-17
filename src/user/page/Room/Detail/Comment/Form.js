@@ -25,23 +25,24 @@ const CommentForm = ({ editing, id, commentId, setEditing }) => {
       noiDung: comment,
       saoBinhLuan: rating,
     };
-    if(user?.id) {
-    if (editing) {
-      setEditing("");
-      if (commentId) {
-        dispatch(editComment({ id: commentId, commentData: data }));
+    if (user?.id) {
+      if (editing) {
+        setEditing("");
+        if (commentId) {
+          dispatch(editComment({ id: commentId, commentData: data }));
+        } else {
+          notification.success({
+            message: "An error occurred. Please try later!.",
+          });
+        }
       } else {
-        notification.success({
-          message: "An error occurred. Please try later!.",
-        });
+        dispatch(postComment({ commentData: data }));
       }
-    } else {
-      dispatch(postComment({ commentData: data }));
-    }
 
-    // Clear the form after submission
-    form.resetFields();} else {
-      dispatch(setPopup({popup: POPUP_NAME.LOGIN}));
+      // Clear the form after submission
+      form.resetFields();
+    } else {
+      dispatch(setPopup({ popup: POPUP_NAME.LOGIN }));
     }
   };
 
