@@ -3,6 +3,7 @@ import { https } from "./config";
 
 export const userServ = {
   login: (info) => https.post(`/auth/signin`, info),
+  bookedRooms: ({ id }) => https.get(`/dat-phong/lay-theo-nguoi-dung/${id}`),
 };
 
 export const roomServ = {

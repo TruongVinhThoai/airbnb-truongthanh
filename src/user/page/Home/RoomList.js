@@ -5,7 +5,7 @@ import _ from 'lodash'
 export default function RoomList({ list, locationList }) {
     const renderRoom = () => {
         return list?.map((room, index) => {
-            let idIndex = _.findIndex(locationList, (item) => item.id == room.maViTri)
+            let idIndex = _.findIndex(locationList, (item) => item.id === room.maViTri)
             if (idIndex > -1) {
                 room.locationDetail = {
                     tenViTri: locationList[idIndex]?.tenViTri,

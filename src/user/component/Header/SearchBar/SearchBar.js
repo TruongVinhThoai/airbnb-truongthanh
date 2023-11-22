@@ -4,8 +4,6 @@ import PeopleOption from './SearchOption/PeopleOption';
 import DateOption from './SearchOption/DateOption';
 import { useSelector } from 'react-redux';
 import useModalBg from '../../Modal/useModalBg';
-import { useEffect } from 'react';
-import { useRef } from 'react';
 import useActiveInput from './SearchOption/useActiveInput';
 
 export const activeInputSlug = {
