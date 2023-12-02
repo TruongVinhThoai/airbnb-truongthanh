@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, DatePicker, Form, Input, Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { validatePhoneNumber } from "./asset/utils";
 import { registerUser } from "../../redux/userSlice";
 import dayjs from "dayjs";
@@ -51,11 +50,11 @@ const FormRegister = () => {
       layout="vertical"
       name="register"
       initialValues={{
-        birthday: dayjs("01/01/2001", dateFormat),
+        birthday: undefined,
         name: "",
         email: "",
         phone: "",
-        gender: "Gender",
+        gender: undefined,
         password: "",
         address: "",
       }}
@@ -165,6 +164,7 @@ const FormRegister = () => {
           >
             <DatePicker
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-[0.3rem] dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Chọn ngày sinh..."
               format={dateFormat}
             />
           </Form.Item>
@@ -184,6 +184,7 @@ const FormRegister = () => {
           >
             <Select
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Gender"
               options={[
                 {
                   value: true,
