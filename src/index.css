@@ -15,3 +15,6 @@
 .ant-upload-list-item-container {
   display: block !important;
 }
+.rdrDefinedRangesWrapper {
+  display: none !important;
+}
